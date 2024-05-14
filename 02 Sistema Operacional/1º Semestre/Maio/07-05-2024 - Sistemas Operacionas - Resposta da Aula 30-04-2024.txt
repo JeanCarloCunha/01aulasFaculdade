@@ -1,0 +1,192 @@
+**** Atenção!!! Considerações - Algumas questões o professor respondeu que a reposta está em uma outra questão *****
+
+Exercícios de Fixação
+
+1) Crie os usuários da tabela a seguir diretamente nos seus respectivos grupos primários e
+com seus respectivos diretórios pessoais. ATENÇÃO: Pode ser necessário criar os grupos
+de cada usuário:
+• Login: frodo Senha: 123 Grupo primário: bolsao Pasta pessoal: /home/ bolsao/frodo 
+• Login: gandalf Senha: 123 Grupo primário: feiticeiro Pasta pessoal: /home/ feiticeiro/ 
+gandalf
+• Login: sam Senha: 123 Grupo primário: bolsao Pasta pessoal: /home/ bolsao/ sam
+• Login: legolas Senha: 123 Grupo primário: elfo Pasta pessoal: /home/ elfo/
+
+R: 
+1.1) Criar os grupos para os usuários
+addgroup bolsao
+addgroup feiticeiro
+addgroup elfo
+
+
+1.2) Criar os usuários
+adduser --home /home/bosao/frodo --ingroup bolsao frodo       
+Em português: Linux, adicone o usuário na pasta padrão /home/bolsao/frodo, coloque ele no grupo bolsao e dê o nome à ele de frodo
+
+adduser --home /home/feiticeiro/Gandalf --ingroup feiticeiro gandalf
+adduser --home /home/bolsao/sam --ingroup bolsao sam
+adduser --home /home/elfo --ingroup elfo legolas
+adduser --home/home/alunos/eng soft/douglas --ingroup 1fase douglas
+adduser --home /home/alunos/arquit/joao --ingroup 3fase joao
+
+Alterar a senha dos usuários:
+passwd frodo
+passwd gandalf
+passwd sam
+passwd legolas
+
+Obs.: As permissões padrões do linux quando você cria usuário são essas (-rwxrw----) as permissões são para essa ordem Diretório e Usuário, Groupo e Outros grupos.
+
+--------------------
+
+
+2) Quais os GID dos grupos criados?
+
+R: 
+more /etc/group -> mostrar todas as linhas do arquivo de configuração de gropos
+tail -10/etc/group -> mostrar as 10 últimas linhas do arquivo group
+
+--------------------
+
+3) Quais os UID dos usuários criados?
+
+R: 
+more /etc/password -> mostrar todas as linhas do arquivo de configuração de senhas
+tail -10 /etc/shadow -> mostrar todas as linhas do arquivo de configuração de senhas
+
+--------------------
+
+4) Pesquise pelo grupo sudo no arquivo do sistema que contém o registro dos grupos de
+usuários do linux. Identifique o GID do grupo sudo e o nome dos usuários que pertencem
+ao grupo sudo.
+
+R:
+more /etc/group | grep sudo -> mostra o conteúdo do arquivo e filtra para mostrar somente as linhas que contém a palavra sudo.
+more /etc/shadow |grep: 27 -> filtra o arquivo shadow e mostra somente os usuários que possuem o número de grupo (:27) na configuração
+
+--------------------
+
+5) Caso ele ainda não faça parte, adicione o usuário frodo ao grupo sudo do sistema.
+
+R:
+adduser frodo sudo
+
+--------------------
+
+6) Faça login com o usuário frodo diretamente em seu diretório pessoal. Continue com esse
+usuário até o fim do exercício.
+
+R:
+Basta abrir um novo terminal pressionado CTRL+SHIFT+F4 e fazer login com as credenciais do usuário (login frodo e a senha escolhida. Lebrando que a senha digitada não irá aparecer no terminal, para garantir a segurança do usuário).
+
+--------------------
+
+7) Usando o comando sudo com o usuário frodo, crie o diretório ringtoruleall no diretório
+/home e confirme que frodo tem permissão de superusuário.
+
+R: sudo mkdir /home/ringtoruleall -> se o comando não der erro, frodo faz parte do grupo sudo, porque precisa de permissão de superusuário para poder criar pastas dentro da pasta/home
+
+
+Obs.:Significado do comando "sudo" Super User DO - traduzindo Super usuário que faz.
+Usuário Sudo pode ser deletado pelo usuário Roots. Pode ser criado mais de um usuário sudo, porêm só pode ter um acesso Root no sistema.
+Todo o histórico de ações pode ser visto no comando CD /VAR/Log
+
+--------------------
+
+8) Adicione o usuário sam no grupo feiticeiro (mantendo seu grupo original). Mostre que o
+usuário faz parte do novo grupo.
+
+R:
+suddo adduser sam feiticeiro -> adicionando sam ao grupo feiticeiro
+more/ etc/group |grep feiticeiro -> sam deve fazer parte do grupo feiticeiro.
+
+--------------------
+
+9) Remova do sistema o usuário gandalf e todo seu diretório pessoal. Mostre que o usuário
+e o diretório foram removidos com sucesso.
+
+R:
+sudo deluser --remove-home gandalf
+
+more /etc/passwd | grep gandalf -> deve retornar linha vazia (se de uma linha vazia após consultar more (mais) da pasta gandalf significa que usuário Gandalf foi deleto dentro desse endereço.
+
+
+Obs.:deluser  (comando para deletar usuário em uma endereço especifico (lembrando que esse comando não faz varedura atrás de outros arquivos que pertence a gandalf para dele. Será deletado apenas os documentos pertecente ao usuário citado no endereço que for informado do local do documento após o comando).
+
+--------------------
+
+10) Exclua o grupo feiticeiro. Mostre que o grupo foi excluído.
+
+R:
+sudo more /etc/group |grep feiticeiro -> se não vier resposta (e não der erro) o groupo foi apagado
+
+--------------------
+
+11) Mude o diretório pessoal do usuário frodo para /home/florestasombria. Mostre que a
+mudança foi realizada.
+
+R:
+sudo usermod -d /home/florestasombria fordo -> altera a pasta padrão do usuário para a pasta informada
+
+more/etc/passwd |grep frodo -> vai mostrar as informações do usuário frodo, e a pasta padrão deve aparecer nesta linha
+
+--------------------
+
+12) Liste de forma detalhada, incluindo arquivos ocultos, o conteúdo do diretório pessoal do
+usuário legolas.
+
+R: 
+ls-la/home/elfo
+
+--------------------
+
+13) Crie um arquivo chamado armas.txt na pasta pessoal do usuário legolas, e dê permissão
+R:
+sudo touch armas.txt -> cria o arquivo armas.txt
+sudo chmod 660 armas.txt -> altera as permissões de leitura e escrita
+sudo chown legolas armas.txt-> torna legolas o dono do arquivo
+sudo chgrp elfo armas.txt -> torna o grupo elfo o grupo "dono" do arquivo
+
+de leitura e escrita somente para o próprio usuário e seu grupo, removendo a permissão
+para outros. Garanta que o dono do arquivo seja legolas e o grupo do arquivo seja elfo
+
+--------------------
+
+14) Faça login em outro terminal com o usuário sam e demonstre que o usuário sam não
+consegue interagir com o arquivo armas, criado anteriormente.
+
+R:
+Teclar CTRL+ALT+F5 para abrir mais um terminal, fazer login com os dados do usuário sam(login e senha definidos na questão 1). Após fazer login, acessar a pasta que contém o arquvio armas.txt com o comando "cd/home/elfo" e tantar acessar o arquivo armas.txt com o comando "nano armas.txt", O linux deve emitir um aleta que o usuário não possui permissão para editar o arquivo.
+
+--------------------
+
+15) Crie um arquivo chamado festas.txt na pasta frodo, dê permissão rwxrwx--- e garanta
+que o dono do arquivo seja frodo e o grupo seja bolsao.
+
+R:
+A questão 15 é praticamente igual à questão 13. Consulte a mesma e altere os dados necessários. 
+
+--------------------
+
+16) Faça login em outro terminal com o usuário sam e demonstre que o usuário sam
+consegue interagir com o arquivo festas, criado anteriormente.
+
+R:
+A questão 16 é praticamente igual à questão 14, porém o usuário sam deve conseguir interagir com o arquivo, pois faz parte do mesmo grupo
+
+--------------------
+
+17) Quais as últimas 5 linhas do arquivo que registra os usuários cadastrados no sistema.
+
+R: 
+tail -5 /etc/passwd
+
+--------------------
+
+18) Quais as últimas 5 linhas do arquivo que registra os grupos cadastrados no sistema.
+
+R:
+tail -5 /etc/groups
+
+--------------------
+
+19) Remova todos os grupos e usuários do sistema, incluindo suas pastas e arquivos pessoais.

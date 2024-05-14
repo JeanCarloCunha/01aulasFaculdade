@@ -1,0 +1,10 @@
+Exercicios novos:
+
+1) O que aparece quando você abre o terminal?
+	a. martim@note:~$ - O que isto significa? (dica: Use o comando uname para ajudar a descobrir)
+2) Identifique os usuários logados no sistema neste momento.
+3) Encontre o arquivo lastlog (dica: use o comando find).
+4) Se o Linux é case sensitive, é necessário saber como o nome do arquivo está escrito?
+   Explique como podemos contornar este "problema".
+5) Como posso mostrar as diferenças entre dois arquivos?(dica: pesquise pelo comando diff)
+6) Execute o comando ls -la/var/log, e coloque o resultado do comando dentro do arquivo listagem.txt (dica: pesquise pelo operador > no Linux)
